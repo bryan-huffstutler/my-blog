@@ -1,5 +1,0 @@
-module.exports = {
-    env: {
-        MONGO_URI: "mongodb+srv://bhuff8404:vectorkill581@cluster0.pqcmcze.mongodb.net/blog?retryWrites=true&w=majority"
-    }
-}
