@@ -1,6 +1,9 @@
 import { AppBar, Button, Toolbar, Typography, ButtonGroup } from "@material-ui/core";
 import Link from 'next/link'
+import {useRouter} from 'next/router'
+
 function Layout(props) {
+    const router = useRouter()
 
     return (
         <div>
@@ -11,8 +14,8 @@ function Layout(props) {
                     </Typography>
 
                     <ButtonGroup color="inherit" variant="text" fullWidth >
-                        <Button><Link href='/'>Home</Link></Button>
-                        <Button><Link href='/allblogs' >All Blogs</Link></Button>
+                        <Button onClick = {()=> router.push('/')}>Home</Button>
+                        <Button onClick = {()=> router.push('/allblogs')}>All Blogs</Button>
                     </ButtonGroup>
                 </Toolbar>
             </AppBar>

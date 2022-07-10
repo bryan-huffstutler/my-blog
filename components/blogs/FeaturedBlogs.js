@@ -5,7 +5,7 @@ function FeaturedBlogs(props) {
     return (
         <Grid container spacing={4}>
             {props.blogs.map(blog => 
-            <BlogCard blog={blog} />)}
+            <BlogCard id={blog._id} blog={blog} />)}
         </Grid>
     );
 }

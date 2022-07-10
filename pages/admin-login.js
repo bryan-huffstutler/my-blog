@@ -1,7 +1,9 @@
+import Admin from '../components/admin'
+
 function AdminLogin() {
     return ( 
         <div>
-            admin login
+            <Admin />
         </div>
      );
 }
