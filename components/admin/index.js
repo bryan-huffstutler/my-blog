@@ -1,49 +1,36 @@
-import { Button, Input, InputLabel } from '@material-ui/core';
-import React, { useState } from 'react'
+import { Grid } from "@material-ui/core";
+import React, { useState } from "react";
+import AuthForm from "./AuthForm";
+import AdminPanel from "./AdminPanel";
+import BlogControl from "./BlogControl";
 
-function AdminHome() {
-    const initInputs = { password: "", username: "" }
-    const [inputs, setInputs] = useState(initInputs)
+function AdminHome(props) {
+  const [token, setToken] = useState("");
 
-    function handleChange(e) {
-        const { name, value } = e.target
-        setInputs(() => ({
-            ...inputs,
-            [name]: value
-        }))
-    }
+  function handleToken(data) {
+    setToken(data);
+  }
 
-    function handleSubmit(e) {
-        e.preventDefault()
-        fetch('/api/admin', {
-            method: 'POST',
-            body: JSON.stringify(inputs)
-        })
-        .then(res => {
-            console.log(res)
-        })
-        
-    }
+  function removeToken() {
+    localStorage.removeItem("token");
+    setToken("");
+  }
 
+  if (token) {
     return (
-        <div style={{ margin: '20px', padding: '10px' }}>
-            <div style={{ padding: "10px" }}>
-                <InputLabel htmlFor='username'>
-                    Username
-                </InputLabel>
-                <Input onChange={handleChange} name='username' />
-            </div>
+      <Grid container>
+        <Grid item xl={6} lg={6} md={6} sm={1} xs={1}>
+          <AdminPanel removeToken={removeToken}/>
+        </Grid>
 
-            <div style={{ padding: "10px" }}>
-                <InputLabel htmlFor='password'>
-                    Password
-                </InputLabel>
-                <Input onChange={handleChange} name='password' /><br />
-            </div>
-
-            <Button style={{ margin: '10px' }} onClick={handleSubmit} color="primary" variant="contained">Submit</Button>
-        </div>
+        <Grid item xl={6} lg={6} md={6} sm={1} xs={1}>
+          <BlogControl blogs={props.blogs} />
+        </Grid>
+      </Grid>
     );
+  } else {
+    return <AuthForm handleToken={handleToken} />;
+  }
 }
 
 export default AdminHome;

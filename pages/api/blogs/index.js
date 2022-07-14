@@ -17,13 +17,8 @@ export default async (req, res) => {
             }
             break;
         case 'POST':
-            try {
-                const blog = await Blog.create(req.body)
-
-                res.status(200).send(blog)
-            } catch (error) {
-                res.status(400).send(error.message)
-            }
+            const newBlog = new Blog(req.body)
+            newBlog.save()
             break;
         default: 
             res.status(400).send(json({success: false}))

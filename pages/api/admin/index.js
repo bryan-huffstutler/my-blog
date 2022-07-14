@@ -2,62 +2,30 @@ import dbConnect from '../../../utils/dbConnect'
 import User from '../../../models/User'
 const jwt = require('jsonwebtoken')
 
+dbConnect()
+
 export default async (req, res) => {
-
-    if (req.method === "POST") {
-        return new Promise(resolve => {
-            dbConnect()
-            const requestBody = JSON.parse(req.body)
-            
-            const user = User.findOne({ username: requestBody.username.toLowerCase() }, (err, user) => {
-                console.log('In findOne')
-                if (err) {
-                    res.status(500)
-                    return new Error(err)
-                }
-                if (!user) {
-                    res.status(403)
-                    return new Error(err)
-                }
-                user.checkPassword(requestBody.password, (err, isMatch) => {
-                    if (err) {
-                        res.status(403)
-                        return new Error(failedLogin)
-                    }
-                    if (!isMatch) {
-                        res.status(403)
-                        return new Error(failedLogin)
+    switch (req.method) {
+        case 'POST':
+            try {
+                await User.findOne({ userName: req.body.username.toLowerCase() }, (err, user) => {
+                    if (!user) {
+                        throw new Error("No User Found")
                     }
 
-                    const token = jwt.sign(user.withoutPassword(), process.env.SECRET)
-                    return res.status(200).send({ token, user: user.withoutPassword() })
-                })
-                // const token = jwt.sign(user.withoutPassword(), process.env.SECRET)
-                // return res.status(200).send({ token, user: user.withoutPassword() })
-            })
-        
-        res.send(user).end();
-        return resolve()})
-    
+                    if (req.body.password != user.password) {
+                        throw new Error("Invalid Password")
+                    }
 
-}}
+                    const token = jwt.sign(user.toJSON(), process.env.SECRET, {
+                        expiresIn: 604800 // 1 week
+                      })
+                    res.status(200).send({ token })
 
+                }).clone()
 
-
-
-// function login(credentials) {
-//     axios.post('/auth/login', credentials)
-//       .then(res => {
-//         console.log(res.data)
-//         const { user, token } = res.data
-//         localStorage.setItem('token', token)
-//         localStorage.setItem('user', JSON.stringify(user))
-//         setMasterState(prevMasterState => ({
-//           ...prevMasterState,
-//           user,
-//           token
-//         }))
-//       })
-//       .catch(err => handleAuthErr(err.response.data.errMsg))
-//   }
-
+            } catch (error) {
+                res.status(400).send(error.message)
+            }
+    }
+}
