@@ -22,7 +22,7 @@ export default function Home(props) {
   )
 }
 
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
   const res = await fetch('http://localhost:3000/api/blogs/featured')
   const blogs = await res.json()
 
