@@ -6,8 +6,14 @@ function MyApp({ Component, pageProps }) {
     // <MasterProvider>
       <Layout>
         <Head>
-          <title>Next Events</title>
+          <title>@Bryan_FS_DEV's Blog</title>
           <meta name='viewport' content='initial-scale=1.0, width=device-width' />
+          <meta name = 'description' content ="Ever wonder what goes through a full stack developers mind while 
+          freelancing? Need to know more about MERN stack technologies?
+            This blog is written by Bryan Huffstutler and I go through my life struggling with Google searches, 
+            struggling to understand things
+            just like everyone else! Here's what I've learned so far..." 
+          /> 
         </Head>
         <Component {...pageProps} />
       </Layout>

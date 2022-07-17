@@ -1,9 +1,11 @@
-import { Grid } from '@material-ui/core'
-import Head from 'next/head'
-import FeaturedBlogs from '../components/blogs/FeaturedBlogs'
-import Intro from '../components/Intro/Intro'
+import Head from "next/head";
+import FeaturedBlogs from "../components/blogs/FeaturedBlogs";
+import Intro from "../components/Intro/Intro";
+import dbConnect from "../utils/dbConnect";
+import Blog from '../models/Blog'
 
 export default function Home(props) {
+  const blogs = JSON.parse(props.blogs)
 
   return (
     <div>
@@ -13,22 +15,22 @@ export default function Home(props) {
       </Head>
 
       <Intro />
-  
-      <FeaturedBlogs blogs={props.blogs} />
-
-
-
+      
+      {blogs ? <FeaturedBlogs blogs={blogs} /> : "No Featured Blogs"}
+      
     </div>
-  )
+  );
 }
 
 export async function getServerSideProps(context) {
-  const res = await fetch('http://localhost:3000/api/blogs/featured')
-  const blogs = await res.json()
+  dbConnect();
+  const data = await Blog.find({ isFeatured: true })
+  const blogs = JSON.stringify(data)
 
+  
   return {
     props: {
       blogs: blogs
-    }
-  }
+    },
+  };
 }
