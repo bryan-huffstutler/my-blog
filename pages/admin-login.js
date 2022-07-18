@@ -1,16 +1,20 @@
 import Admin from '../components/admin'
+import dbConnect from '../utils/dbConnect'
+import Blog from '../models/Blog'
 
 function AdminLogin(props) {
+    const blogs = JSON.parse(props.blogs)
     return ( 
         <div>
-            <Admin blogs={props.blogs}/>
+            <Admin blogs={blogs}/>
         </div>
      );
 }
 
-export async function getServerSideProps() {
-    const res = await fetch('http://localhost:3000/api/blogs')
-    const blogs = await res.json()
+export async function getStaticProps() {
+    dbConnect()
+    const data = await Blog.find()
+    const blogs = JSON.stringify(data)
 
     return {
         props: {

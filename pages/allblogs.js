@@ -14,18 +14,13 @@ function AllBlogsPage(props) {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-
-         
             <AllBlogs blogs={blogs} />
-
-
         </div>
     );
 }
 
 export async function getServerSideProps() {
-    // const res = await fetch('http://localhost:3000/api/blogs')
-    // const blogs = await res.json()
+    dbConnect()
     const data = await Blog.find()
     const blogs = JSON.stringify(data)
 
