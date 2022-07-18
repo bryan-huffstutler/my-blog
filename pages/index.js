@@ -10,8 +10,9 @@ export default function Home(props) {
   return (
     <div>
       <Head>
-        <title>Create Next App</title>
+        <title>@Bryan_FS_Dev's Blog</title>
         <link rel="icon" href="/favicon.ico" />
+        <meta name="description" content="@Bryan_FS_DEV's blog. I blog about life in general, I write technical blogs, and I write about being a developer in general." />
       </Head>
 
       <Intro />
