@@ -15,7 +15,7 @@ export default function Home(props) {
         <link rel="canonical" href="https://bryan-fs-dev-blog.vercel.app/" />
         <meta
           name="description"
-          content="@Bryan_FS_DEV's blog. I blog about life in general, I write technical blogs, and I write about being a developer in general."
+          content="My name is Bryan Huffstutler and I blog about life in general, I write technical blogs, and I write about being a developer in general."
         />
       </Head>
 
