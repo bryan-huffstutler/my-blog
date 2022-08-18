@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import {
   Typography,
   Input,
@@ -20,14 +21,14 @@ function BlogControlCard(props) {
         {
             method: "PUT",
             body: json
-        }).then(res => console.log(res))
+        }).then(res => props.getBlogs())
     } else {
         const json = JSON.stringify({isFeatured: true})
         fetch(`/api/blogs/${_id}`,
         {
             method: "PUT",
             body: json
-        }).then(res => console.log(res)).catch(err => console.log(err))
+        }).then(res => props.getBlogs()).catch(err => console.log(err))
     }
     setFeatured(!featured)
   }
@@ -35,7 +36,7 @@ function BlogControlCard(props) {
   function handleDelete () {
     fetch(`/api/blogs/${_id}`, {
         method: "DELETE"
-    }).catch(err => console.log(err))
+    }).then(res=> props.getBlogs()).catch(err => console.log(err))
   }
 
   return (

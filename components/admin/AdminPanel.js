@@ -45,18 +45,12 @@ function AdminPanel(props) {
   }
 
   function handleSubmit() {
-    
-    // setInputs((prev) => ({
-    //   ...prev,
-    //   date: new Date(),
-    // }));
-
     fetch("/api/blogs", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(inputs),
     });
-
+    props.getBlogs()
     clearInputs();
   }
 
